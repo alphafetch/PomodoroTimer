@@ -2,6 +2,8 @@
 :root {
     --bg: #2a4b70;
     --text: #8aaace;
+    --accent: #3d6491;
+    --border: #25384d;
 
     --font: "Space Grotesk", sans-serif;
 }
@@ -27,6 +29,17 @@ body {
 
 .centered {
     justify-content: center;
+}
+
+.btn {
+    background-color: var(--accent);
+    font-family: inherit;
+    border-radius: 10px;
+    border: solid 5px var(--border);
+    color: var(--text);
+    width: 130px;
+    height: 45px;
+    cursor: pointer;
 }
 
 
