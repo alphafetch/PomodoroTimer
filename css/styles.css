@@ -1,0 +1,39 @@
+/* Define basic color palatte */
+:root {
+    --bg: #2a4b70;
+    --text: #8aaace;
+
+    --font: "Space Grotesk", sans-serif;
+}
+
+
+
+body {
+    background-color: var(--bg);
+    margin: 0;
+
+    /* Add defaults for each element to keep to the DRY principle */
+    font-family: var(--font);
+    color: var(--text);
+}
+
+
+
+.container {
+    display: flex;
+    margin: 0;
+    padding: 5px;
+}
+
+.centered {
+    justify-content: center;
+}
+
+
+
+#timer {
+    font-size: 120px;
+
+    /* Remove most margins so the timer isn't too far down the page */
+    margin: 25px;
+}
