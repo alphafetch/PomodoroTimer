@@ -1,3 +1,5 @@
+import { start, stop } from './pomodoro.js'
+
 const timerContainer = document.getElementById('timer-container');
 const buttonContainer = document.getElementById('button-container');
 
@@ -15,6 +17,22 @@ const startButton = document.createElement('button');
     startButton.classList.add('btn');
 
     startButton.addEventListener('click', () => {
-        
+        start(timer, 10); // 1500s = 25m
+        startButton.style.display = 'none';
+        stopButton.style.display = 'block';
     });
 buttonContainer.appendChild(startButton);
+
+// Add a stop button replacing the start button when it is clicked, stopping the timer
+const stopButton = document.createElement('button');
+    stopButton.textContent = 'Stop';
+    stopButton.classList.add('btn');
+
+    stopButton.addEventListener('click', () => {
+        stop(timer);
+        stopButton.style.display = 'none';
+        startButton.style.display = 'block';
+    });
+buttonContainer.appendChild(stopButton);
+// Hide the stop button to start
+stopButton.style.display = 'none';
