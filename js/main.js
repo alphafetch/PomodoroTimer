@@ -17,9 +17,7 @@ const startButton = document.createElement('button');
     startButton.classList.add('btn');
 
     startButton.addEventListener('click', () => {
-        start(timer, 10); // 1500s = 25m
-        startButton.style.display = 'none';
-        stopButton.style.display = 'block';
+        start(timer, startButton, stopButton);
     });
 buttonContainer.appendChild(startButton);
 
@@ -27,12 +25,10 @@ buttonContainer.appendChild(startButton);
 const stopButton = document.createElement('button');
     stopButton.textContent = 'Stop';
     stopButton.classList.add('btn');
+    // Hide the stop button to start
+    stopButton.style.display = 'none';
 
     stopButton.addEventListener('click', () => {
-        stop(timer);
-        stopButton.style.display = 'none';
-        startButton.style.display = 'block';
+        stop(timer, startButton, stopButton);
     });
 buttonContainer.appendChild(stopButton);
-// Hide the stop button to start
-stopButton.style.display = 'none';
