@@ -5,14 +5,20 @@ import { displayTime } from './utils.js'
 var id = 0;
 var breakCount = 0;
 
+const pomodoroTime = 1;  // 1500s = 25m
+const shortBreakTime = 2; // 300s = 5m
+const longBreakTime = 3; // 1800s = 30m
+
 // Take an object to use instead of taking repeated elements
 export function start(disp) {
     // Start the timer at 25m to start
-    let timer = 1500; // 1500s = 25m
+    let timer = pomodoroTime;
 
     // Display the stop button
     disp.startBtn.style.display = 'none';
     disp.stopBtn.style.display = 'block';
+
+    disp.timeFrame.textContent = 'Pomodoro'
 
     // Set a function to run every second that updates the value of the pomodoro timer
     id = setInterval(function () {
@@ -43,11 +49,13 @@ function shortBreak(disp) {
     // Start the timer at 5m for a short break
     // Increase the break counter
     breakCount++;
-    let timer = 300; // 300s = 5m
+    let timer = shortBreakTime;
 
     // Ensure the stop button is displayed
     disp.startBtn.style.display = 'none';
     disp.stopBtn.style.display = 'block';
+
+    disp.timeFrame.textContent = 'Short break';
 
     // Set a function to run every second that updates the value of the pomodoro timer
     id = setInterval(function () {
@@ -66,11 +74,13 @@ function longBreak(disp) {
     // Start the timer at 30m for an extended break (every four pomodoros)
     // Restart the break count so longBreak() doesn't loop
     breakCount = 0;
-    let timer = 1800; // 1800s = 5m
+    let timer = longBreakTime;
 
     // Ensure the stop button is displayed
     disp.startBtn.style.display = 'none';
     disp.stopBtn.style.display = 'block';
+
+    disp.timeFrame.textContent = 'Extended break';
 
     // Set a function to run every second that updates the value of the pomodoro timer
     id = setInterval(function () {
@@ -89,5 +99,6 @@ export function stop(disp) {
     disp.timerElem.textContent = '00:00';
     disp.stopBtn.style.display = 'none';
     disp.startBtn.style.display = 'block';
+    disp.timeFrame.textContent = 'Timer off';
     clearInterval(id);
 }

@@ -9,8 +9,17 @@ const timer = document.createElement('p');
     timer.textContent = '00:00';
     // Add an id to the timer
     timer.id = 'timer';
+    // Change margins for better styling
+    timer.style.marginBottom = '5px';
 // Append it to the container so it shows up on the webpage
 timerContainer.appendChild(timer);
+
+const currentTimeFrame = document.createElement('p');
+    currentTimeFrame.textContent = 'Timer off';
+    // Change margins for better styling
+    currentTimeFrame.style.margin = '0px';
+    currentTimeFrame.style.marginBottom = '15px';
+timerContainer.appendChild(currentTimeFrame);
 
 // Add a start button to allow the user to start the pomodoro
 const startButton = document.createElement('button');
@@ -30,11 +39,12 @@ buttonContainer.appendChild(stopButton);
 const displayElems = {
     timerElem: timer,
     startBtn: startButton,
-    stopBtn: stopButton
+    stopBtn: stopButton,
+    timeFrame: currentTimeFrame
 };
 
 // Add event listeners after creating the object, because otherwise,
-// you wouldn't be able to call the functions with the 'compressed,' object
+// you wouldn't be able to call the functions with the object
 stopButton.addEventListener('click', () => {
     stop(displayElems);
 });
