@@ -16,10 +16,6 @@ timerContainer.appendChild(timer);
 const startButton = document.createElement('button');
     startButton.textContent = 'Start';
     startButton.classList.add('btn');
-
-    startButton.addEventListener('click', () => {
-        start(timer, startButton, stopButton);
-    });
 buttonContainer.appendChild(startButton);
 
 // Add a stop button replacing the start button when it is clicked, stopping the timer
@@ -28,8 +24,20 @@ const stopButton = document.createElement('button');
     stopButton.classList.add('btn');
     // Hide the stop button to start
     stopButton.style.display = 'none';
-
-    stopButton.addEventListener('click', () => {
-        stop(timer, startButton, stopButton);
-    });
 buttonContainer.appendChild(stopButton);
+
+// Create object to hold display elements
+const displayElems = {
+    timerElem: timer,
+    startBtn: startButton,
+    stopBtn: stopButton
+};
+
+// Add event listeners after creating the object, because otherwise,
+// you wouldn't be able to call the functions with the 'compressed,' object
+stopButton.addEventListener('click', () => {
+    stop(displayElems);
+});
+startButton.addEventListener('click', () => {
+    start(displayElems);
+});
