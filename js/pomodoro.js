@@ -1,10 +1,13 @@
+// Get displayTime function - used for displaying the time given, to be consistent with DRY principles
+import { displayTime } from './utils.js'
+
 // Id used to call clearInterval when the stop button is clicked
 var id = 0;
+var breakCount = 0;
 
 export function start(pomodoro, startButton, stopButton) {
     // Start the timer at 25m to start
-    let timer = 1500; // 1500s = 25m
-    let mins, secs;
+    let timer = 1; // 1500s = 25m
 
     // Display the stop button
     startButton.style.display = 'none';
@@ -12,48 +15,73 @@ export function start(pomodoro, startButton, stopButton) {
 
     // Set a function to run every second that updates the value of the pomodoro timer
     id = setInterval(function () {
-        // Get the minutes from the timer by dividing by 60 amd the same for the seconds with modulus
-        mins = parseInt(timer / 60);
-        secs = parseInt(timer % 60);
+        // Use the displayTime function to avoid code duplication and improve readability
+        displayTime(pomodoro, timer);
 
-        // Parse it into a string adding a '0' if it is a single digit
-        mins = mins < 10 ? '0' + mins.toString() : mins.toString();
-        secs = secs < 10 ? '0' + secs.toString() : secs.toString();
+        /* 
+            Decrement the timer and check if it is 0
+            Then check the break count to see what break to initiate
 
-        // Display it onto the page
-        pomodoro.textContent = `${mins}:${secs}`;
-
-        // Decrement the timer and check if it is 0
-        timer -= 1.0;
-        if (timer < 0) { stop(pomodoro, startButton, stopButton); fiveMinuteBreak(pomodoro, startButton, stopButton); }
+            <4 Pomodoros:  Short break (5m)
+            >=4 Pomodoros: Long break  (30m)
+        */
+        timer--;
+        if (timer < 0) {
+            stop(pomodoro, startButton, stopButton); 
+            
+            if (breakCount != 3) {
+                shortBreak(pomodoro, startButton, stopButton); 
+            } else {
+                longBreak(pomodoro, startButton, stopButton);
+            }
+        }
     }, 1000);
 }
 
-function fiveMinuteBreak(pomodoro, startButton, stopButton) {
-    // Start the timer at 25m to start
-    let timer = 300; // 300s = 5m
-    let mins, secs;
+function shortBreak(pomodoro, startButton, stopButton) {
+    // Start the timer at 5m for a short break
+    // Increase the break counter
+    breakCount++;
+    let timer = 2; // 300s = 5m
 
-    // Display the stop button
+    // Ensure the stop button is displayed
     startButton.style.display = 'none';
     stopButton.style.display = 'block';
 
     // Set a function to run every second that updates the value of the pomodoro timer
     id = setInterval(function () {
-        // Get the minutes from the timer by dividing by 60 amd the same for the seconds with modulus
-        mins = parseInt(timer / 60);
-        secs = parseInt(timer % 60);
-
-        // Parse it into a string adding a '0' if it is a single digit
-        mins = mins < 10 ? '0' + mins.toString() : mins.toString();
-        secs = secs < 10 ? '0' + secs.toString() : secs.toString();
-
-        // Display it onto the page
-        pomodoro.textContent = `${mins}:${secs}`;
-
+        displayTime(pomodoro, timer);
+        
         // Decrement the timer and check if it is 0
-        timer -= 1.0;
-        if (timer < 0) { stop(pomodoro, startButton, stopButton); start(pomodoro, startButton, stopButton); }
+        timer--;
+        if (timer < 0) { 
+            stop(pomodoro, startButton, stopButton); 
+            start(pomodoro, startButton, stopButton); 
+        }
+    }, 1000);
+}
+
+function longBreak(pomodoro, startButton, stopButton) {
+    // Start the timer at 30m for an extended break (every four pomodoros)
+    // Restart the break count so longBreak() doesn't loop
+    breakCount = 0;
+    let timer = 3; // 1800s = 5m
+
+    // Ensure the stop button is displayed
+    startButton.style.display = 'none';
+    stopButton.style.display = 'block';
+
+    // Set a function to run every second that updates the value of the pomodoro timer
+    id = setInterval(function () {
+        displayTime(pomodoro, timer);
+        
+        // Decrement the timer and check if it is 0
+        timer--;
+        if (timer < 0) { 
+            stop(pomodoro, startButton, stopButton); 
+            start(pomodoro, startButton, stopButton); 
+            
+        }
     }, 1000);
 }
 
