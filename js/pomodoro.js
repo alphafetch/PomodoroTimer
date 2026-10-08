@@ -5,9 +5,9 @@ import { displayTime } from './utils.js'
 var id = 0;
 var breakCount = 0;
 
-const pomodoroTime = 1;  // 1500s = 25m
-const shortBreakTime = 2; // 300s = 5m
-const longBreakTime = 3; // 1800s = 30m
+const pomodoroTime = 1500;  // 1500s = 25m
+const shortBreakTime = 300; // 300s = 5m
+const longBreakTime = 1800; // 1800s = 30m
 
 // Take an object to use instead of taking repeated elements
 export function start(disp) {
