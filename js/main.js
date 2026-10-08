@@ -1,3 +1,4 @@
+// Get pomodoro functions to run the timer
 import { start, stop } from './pomodoro.js'
 
 const timerContainer = document.getElementById('timer-container');
