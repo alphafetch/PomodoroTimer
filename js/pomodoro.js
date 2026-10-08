@@ -34,53 +34,30 @@ export function start(disp) {
         */
         timer--;
         if (timer < 0) {
-            stop(disp); 
+            stop(disp);
             
             if (breakCount != 3) {
-                shortBreak(disp); 
+                pomodoroBreak(disp, false); 
             } else {
-                longBreak(disp);
+                pomodoroBreak(disp, true);
             }
         }
     }, 1000);
 }
 
-function shortBreak(disp) {
-    // Start the timer at 5m for a short break
-    // Increase the break counter
-    breakCount++;
-    let timer = shortBreakTime;
+// Universal break function, with long param. to assess whether to have an extended break or a short break
+function pomodoroBreak(disp, long) {
+    // Start the timer at 5m for a short break and 30m for an extended one
+    // Increase the break counter or reset
+    if (!long) { breakCount++; } else { breakCount = 0; }
+    let timer = long ? longBreakTime : shortBreakTime;
 
     // Ensure the stop button is displayed
     disp.startBtn.style.display = 'none';
     disp.stopBtn.style.display = 'block';
 
-    disp.timeFrame.textContent = 'Short break';
-
-    // Set a function to run every second that updates the value of the pomodoro timer
-    id = setInterval(function () {
-        displayTime(disp.timerElem, timer);
-        
-        // Decrement the timer and check if it is 0
-        timer--;
-        if (timer < 0) { 
-            stop(disp); 
-            start(disp); 
-        }
-    }, 1000);
-}
-
-function longBreak(disp) {
-    // Start the timer at 30m for an extended break (every four pomodoros)
-    // Restart the break count so longBreak() doesn't loop
-    breakCount = 0;
-    let timer = longBreakTime;
-
-    // Ensure the stop button is displayed
-    disp.startBtn.style.display = 'none';
-    disp.stopBtn.style.display = 'block';
-
-    disp.timeFrame.textContent = 'Extended break';
+    // Display the correct break time frame
+    disp.timeFrame.textContent = long ? 'Extended break' : 'Short break';
 
     // Set a function to run every second that updates the value of the pomodoro timer
     id = setInterval(function () {
